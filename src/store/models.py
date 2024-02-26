@@ -2,8 +2,10 @@ from django.db import models
 
 # Create your models here.
 
+
 class Color(models.Model):
     color = models.CharField(max_length=255, unique=True)
+    color_id = models.SlugField(unique=True)
 
     def __str__(self):
         return self.color
@@ -11,6 +13,7 @@ class Color(models.Model):
 
 class Material(models.Model):
     material = models.CharField(max_length=255, unique=True)
+    material_id = models.SlugField(unique=True)
 
     def __str__(self):
         return self.material
@@ -19,6 +22,7 @@ class Material(models.Model):
 class Brand(models.Model):
     brand = models.CharField(max_length=255, unique=True)
     logo = models.ImageField(upload_to='media/brand-logo/', blank=True)
+    brand_id = models.SlugField(unique=True)
 
     def __str__(self):
         return self.brand
@@ -26,6 +30,7 @@ class Brand(models.Model):
 
 class MainCategory(models.Model):
     main_category = models.CharField(max_length=255, unique=True)
+    main_category_id = models.SlugField(unique=True)
 
     def __str__(self):
         return self.main_category
@@ -34,22 +39,24 @@ class MainCategory(models.Model):
 class Category(models.Model):
     main_cat = models.ForeignKey(MainCategory, on_delete=models.CASCADE)
     category = models.CharField(max_length=255, unique=True)
+    category_id = models.SlugField(unique=True)
 
     def __str__(self):
-        return self.main_cat + '--' + self.category
+        return self.main_cat.main_category + '--' + self.category
 
 
 class SubCategory(models.Model):
     cat = models.ForeignKey(Category, on_delete=models.CASCADE)
     sub_category = models.CharField(max_length=255, unique=True)
+    subcategory_id = models.SlugField(unique=True)
 
     def __str__(self):
-        return self.cat.main_cat.name + '--' + self.cat.category + '--' + self.sub_category
+        return self.cat.main_cat.main_category + '--' + self.cat.category + '--' + self.sub_category
 
 
 class Product(models.Model):
     product_name = models.CharField(max_length=255, unique=True)
-    url = models.SlugField(unique=True)
+    product_id = models.SlugField(unique=True)
     description = models.TextField()
     main_image = models.ImageField(upload_to='media/product_main_images/')
     total_quantity = models.PositiveIntegerField()
