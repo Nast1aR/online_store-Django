@@ -54,7 +54,7 @@ class Product(models.Model):
     main_image = models.ImageField(upload_to='media/product_main_images/')
     total_quantity = models.PositiveIntegerField()
     quantity = models.PositiveIntegerField()
-    priceUAH = models.DecimalField()
+    priceUAH = models.PositiveSmallIntegerField()
     product_type = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     color = models.ForeignKey(Color, on_delete=models.PROTECT)
     material = models.ForeignKey(Material, on_delete=models.PROTECT)
