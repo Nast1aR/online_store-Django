@@ -2,4 +2,4 @@
 __pycache__/
 
 #Storages
-.sqlite3
+src/db.sqlite3
