@@ -2,4 +2,4 @@
 __pycache__/
 
 #Storages
-.sglite3
+.sqlite3
