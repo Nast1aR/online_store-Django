@@ -1,0 +1,5 @@
+.settings
+__pycache__/
+
+#Storages
+.sglite3
