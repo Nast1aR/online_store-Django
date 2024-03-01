@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-=8ue0yun5m2hd484rm%-3#v&a)(*$p-#dd7y0bg*w6vye@4wz6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
     "userauth",
     "store.apps.StoreConfig",
 ]
@@ -78,10 +79,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "DeepSound",
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
+        "NAME": "qmdvnugt",
+        'USER': 'qmdvnugt',
+        'PASSWORD': 'dD1CLmzIxPEw2wFrYBg53NT8tKoiYDZN',
+        'HOST': 'kesavan.db.elephantsql.com',
         'PORT': '5432',
     }
 }
