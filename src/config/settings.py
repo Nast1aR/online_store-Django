@@ -15,7 +15,7 @@ SECRET_KEY = "django-insecure-=8ue0yun5m2hd484rm%-3#v&a)(*$p-#dd7y0bg*w6vye@4wz6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '127.0.0.1']
 
 
 # Application definition
@@ -27,6 +27,7 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
 ]
 
 THIRD_PARTY_APPS = [
@@ -37,6 +38,7 @@ LOCAL_APPS = [
     "authentication",
     "rest-framework.authtocken"
     "users",
+    "store.apps.StoreConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -77,8 +79,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "qmdvnugt",
+        'USER': 'qmdvnugt',
+        'PASSWORD': 'dD1CLmzIxPEw2wFrYBg53NT8tKoiYDZN',
+        'HOST': 'kesavan.db.elephantsql.com',
+        'PORT': '5432',
     }
 }
 
@@ -120,27 +126,11 @@ AUTH_USER_MODEL = "authentication.User"
 
 STATIC_URL = "static/"
 
+MEDIA = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        # "rest_framework.authentication.SessionAuthentication",
-        # "rest_framework.authentication.TokenAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ],
-}
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=5),
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=60),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=5),
-    "AUTH_HEADER_TYPES": ("JWT",),
-}
