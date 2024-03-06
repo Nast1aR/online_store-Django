@@ -3,10 +3,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
+app_name = "user"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("user/", include("userauth.urls")),
-    path("", include("store.urls")),
+    path("users/", include("users.urls")),
+    path("authentication", include("authentication.urls")),
+    path("", include("store.urls")),,
 ]
 
 if settings.DEBUG:
