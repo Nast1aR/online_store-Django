@@ -1,1 +1,5 @@
-.idea/
+.idea/.settings
+__pycache__/
+
+#Storages
+src/db.sqlite3
