@@ -41,18 +41,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # libraries
     "rest_framework",
-    "corsheaders",
-    "ckeditor",
-    "ckeditor_uploader",
-    # apps
     "userauth",
     "store.apps.StoreConfig",
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -140,17 +134,6 @@ STATICFILES_DIRS = [
 MEDIA = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'extraPlugins': ','.join(
-            [
-                'youtube',
-            ]
-        ),
-    },
-}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
