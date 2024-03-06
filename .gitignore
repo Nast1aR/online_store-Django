@@ -1,5 +1,5 @@
 .idea/.settings
 __pycache__/
-
+.idea
 #Storages
 src/db.sqlite3
