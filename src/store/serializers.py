@@ -24,5 +24,5 @@ class MaterialSerializer(serializers.ModelSerializer):
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['product_name', 'main_image', 'priceUAH']
+        fields = ['product_name', 'main_image', 'priceUAH', 'new_arrive']
 

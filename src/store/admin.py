@@ -2,8 +2,17 @@ from django.contrib import admin
 
 # Register your models here.
 from django.utils.safestring import mark_safe
-
+from django import forms
 from store.models import *
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+
+class ProductAdminForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Product
+        fields = '__all__'
 
 
 @admin.register(Color)
@@ -54,6 +63,7 @@ class AttributesInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['product_name', 'get_image', 'quantity', 'total_quantity', 'product_type', 'priceUAH']
     list_display_links = ['product_name',]
+    form = ProductAdminForm
     inlines = [
         ImagesInline, AttributesInline,
     ]

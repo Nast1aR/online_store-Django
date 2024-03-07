@@ -42,3 +42,4 @@ class ProductNewArrivesAPIView(APIView):
         serializer_model = ProductListSerializer(model, many=True)
         return Response(serializer_model.data)
 
+

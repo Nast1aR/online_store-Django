@@ -4,41 +4,41 @@ from django.db import models
 
 
 class Color(models.Model):
-    color = models.CharField(max_length=255, unique=True)
-    color_id = models.SlugField(unique=True)
+    color = models.CharField(max_length=255, unique=True, verbose_name='Кольор')
+    color_id = models.SlugField(unique=True, verbose_name='ID Кольору')
 
     def __str__(self):
         return self.color
 
 
 class Material(models.Model):
-    material = models.CharField(max_length=255, unique=True)
-    material_id = models.SlugField(unique=True)
+    material = models.CharField(max_length=255, unique=True, verbose_name='Матеріал')
+    material_id = models.SlugField(unique=True, verbose_name='ID Матеріалу')
 
     def __str__(self):
         return self.material
 
 
 class Brand(models.Model):
-    brand = models.CharField(max_length=255, unique=True)
-    logo = models.ImageField(upload_to='media/brand-logo/', blank=True)
-    brand_id = models.SlugField(unique=True)
+    brand = models.CharField(max_length=255, unique=True, verbose_name='Бренд')
+    logo = models.ImageField(upload_to='media/brand-logo/', blank=True, verbose_name='Логотип')
+    brand_id = models.SlugField(unique=True, verbose_name='ID Бренду')
 
     def __str__(self):
         return self.brand
 
 
 class MainCategory(models.Model):
-    main_category = models.CharField(max_length=255, unique=True)
-    main_category_id = models.SlugField(unique=True)
+    main_category = models.CharField(max_length=255, unique=True, verbose_name='Основна Категорія')
+    main_category_id = models.SlugField(unique=True, verbose_name='')
 
     def __str__(self):
         return self.main_category
 
 
 class Category(models.Model):
-    main_cat = models.ForeignKey(MainCategory, on_delete=models.CASCADE)
-    category = models.CharField(max_length=255, unique=True)
+    main_cat = models.ForeignKey(MainCategory, on_delete=models.CASCADE, verbose_name='Основна Категорія')
+    category = models.CharField(max_length=255, unique=True, verbose_name='Категорія')
     category_id = models.SlugField(unique=True)
 
     def __str__(self):
@@ -46,8 +46,8 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
-    cat = models.ForeignKey(Category, on_delete=models.CASCADE)
-    sub_category = models.CharField(max_length=255, unique=True)
+    cat = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категорія')
+    sub_category = models.CharField(max_length=255, unique=True, verbose_name='ПідКатегорія')
     subcategory_id = models.SlugField(unique=True)
 
     def __str__(self):
