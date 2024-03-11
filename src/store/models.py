@@ -61,12 +61,18 @@ class Product(models.Model):
     main_image = models.ImageField(upload_to='media/product_main_images/')
     total_quantity = models.PositiveIntegerField()
     quantity = models.PositiveIntegerField()
-    priceUAH = models.PositiveSmallIntegerField()
     product_type = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     color = models.ForeignKey(Color, on_delete=models.PROTECT)
     material = models.ForeignKey(Material, on_delete=models.PROTECT)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
     new_arrive = models.BooleanField(default=True)
+    priceUAH = models.DecimalField()
+    sale_priceUAH = models.DecimalField(null=True, blank=True)
+    sale = models.DecimalField(null=True, blank=True)
+
+    def get_sale(self):
+        self.sale = self.priceUAH - self.sale_priceUAH
+        return self.sale
 
     def __str__(self):
         return self.product_name
