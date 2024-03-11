@@ -1,6 +1,6 @@
-import os
 from datetime import  timedelta
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,7 +15,7 @@ SECRET_KEY = "django-insecure-=8ue0yun5m2hd484rm%-3#v&a)(*$p-#dd7y0bg*w6vye@4wz6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ORIGIN_WHITELIST = [
@@ -31,7 +31,6 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "rest_framework",
 ]
 
 THIRD_PARTY_APPS = [
@@ -39,13 +38,14 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "ckeditor",
     "ckeditor_uploader",
+    "drf_yasg"
 ]
 
 LOCAL_APPS = [
     "authentication",
-    "rest-framework.authtocken"
+    "rest_framework.authtoken",
     "users",
-    "store.apps.StoreConfig",
+    "store",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -96,7 +96,6 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'users.User'
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -130,7 +129,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-AUTH_USER_MODEL = "authentication.User"
+#AUTH_USER_MODEL = "authentication.User"
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
@@ -145,6 +144,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'users.User'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_CONFIGS = {
