@@ -29,16 +29,16 @@ class MaterialAPIView(APIView):
         return Response(serializer_model.data)
 
 
-class ProductListAPIView(APIView):
+class ProductMainOnSaleAPIView(APIView):
     def get(self, *args):
-        model = Product.objects.all()
+        model = Product.objects.order_by('-id')[:8]
         serializer_model = ProductListSerializer(model, many=True)
         return Response(serializer_model.data)
 
 
-class ProductNewArrivesAPIView(APIView):
+class ProductMainNewArrivesAPIView(APIView):
     def get(self, *args):
-        model = Product.objects.filter(new_arrive=True)
+        model = Product.objects.filter(new_arrive=True).order_by('-id')[:8]
         serializer_model = ProductListSerializer(model, many=True)
         return Response(serializer_model.data)
 

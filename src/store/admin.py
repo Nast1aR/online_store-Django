@@ -62,6 +62,7 @@ class AttributesInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['product_name', 'get_image', 'quantity', 'total_quantity', 'product_type', 'priceUAH']
+    readonly_fields = ['sale',]
     list_display_links = ['product_name',]
     form = ProductAdminForm
     inlines = [
