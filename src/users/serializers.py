@@ -32,8 +32,3 @@ class UserSerializer(serializers.ModelSerializer):
         User.objects.create(user=user)
 
         return user
-
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = '__all__'
