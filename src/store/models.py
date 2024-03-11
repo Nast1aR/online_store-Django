@@ -66,13 +66,15 @@ class Product(models.Model):
     material = models.ForeignKey(Material, on_delete=models.PROTECT)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
     new_arrive = models.BooleanField(default=True)
-    priceUAH = models.DecimalField()
-    sale_priceUAH = models.DecimalField(null=True, blank=True)
-    sale = models.DecimalField(null=True, blank=True)
+    priceUAH = models.PositiveSmallIntegerField()
+    sale_priceUAH = models.PositiveSmallIntegerField(null=True, blank=True, default=0)
 
-    def get_sale(self):
-        self.sale = self.priceUAH - self.sale_priceUAH
-        return self.sale
+    def sale(self):
+        if self.sale_priceUAH == 0:
+            return 0
+        elif self.sale_priceUAH is None:
+            return 0
+        return self.priceUAH - self.sale_priceUAH
 
     def __str__(self):
         return self.product_name
