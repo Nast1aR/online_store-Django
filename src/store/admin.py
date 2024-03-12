@@ -35,19 +35,19 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(MainCategory)
 class MainCategoryAdmin(admin.ModelAdmin):
-    list_display = ['main_category_id', 'main_category',]
+    list_display = ['url', 'main_category',]
     list_display_links = ['main_category',]
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['category_id', 'category',]
+    list_display = ['url', 'category',]
     list_display_links = ['category',]
 
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ['cat', 'sub_category', 'subcategory_id',]
+    list_display = ['cat', 'sub_category', 'url',]
     list_display_links = ['sub_category',]
 
 
