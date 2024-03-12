@@ -26,3 +26,14 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['product_name', 'main_image', 'new_arrive', 'priceUAH', 'sale_priceUAH', 'sale']
 
+
+class MainCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MainCategory
+        fields = ['main_category', 'url']
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['category', 'url']
