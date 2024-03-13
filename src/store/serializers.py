@@ -6,25 +6,31 @@ from store.models import *
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
-        fields = ['brand', 'brand_id']
+        fields = ['brand', 'url']
 
 
 class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Color
-        fields = ['color', 'color_id']
+        fields = ['color', 'url']
 
 
 class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Material
-        fields = ['material', 'material_id']
+        fields = ['material', 'url']
 
 
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['product_name', 'main_image', 'new_arrive', 'priceUAH', 'sale_priceUAH', 'sale']
+        fields = ['product_name', 'url', 'main_image', 'new_arrive', 'priceUAH', 'sale_priceUAH', 'sale']
+
+
+class ProductDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['product_name', ]
 
 
 class MainCategorySerializer(serializers.ModelSerializer):

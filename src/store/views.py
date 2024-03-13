@@ -58,3 +58,5 @@ class ProductMainCategoryListAPIView(APIView):
         category_serializer_model = CategorySerializer(category_model, many=True)
         data = [serializer_model.data, category_serializer_model.data]
         return Response(data)
+
+

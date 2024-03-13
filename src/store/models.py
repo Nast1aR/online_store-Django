@@ -5,7 +5,7 @@ from django.db import models
 
 class Color(models.Model):
     color = models.CharField(max_length=255, unique=True, verbose_name='Кольор')
-    color_id = models.SlugField(unique=True, verbose_name='ID Кольору')
+    url = models.SlugField(unique=True, verbose_name='ID Кольору')
 
     def __str__(self):
         return self.color
@@ -13,7 +13,7 @@ class Color(models.Model):
 
 class Material(models.Model):
     material = models.CharField(max_length=255, unique=True, verbose_name='Матеріал')
-    material_id = models.SlugField(unique=True, verbose_name='ID Матеріалу')
+    url = models.SlugField(unique=True, verbose_name='ID Матеріалу')
 
     def __str__(self):
         return self.material
@@ -22,7 +22,7 @@ class Material(models.Model):
 class Brand(models.Model):
     brand = models.CharField(max_length=255, unique=True, verbose_name='Бренд')
     logo = models.ImageField(upload_to='media/brand-logo/', blank=True, verbose_name='Логотип')
-    brand_id = models.SlugField(unique=True, verbose_name='ID Бренду')
+    url = models.SlugField(unique=True, verbose_name='ID Бренду')
 
     def __str__(self):
         return self.brand
@@ -56,7 +56,7 @@ class SubCategory(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=255, unique=True)
-    product_id = models.SlugField(unique=True)
+    url = models.SlugField(unique=True)
     description = models.TextField()
     main_image = models.ImageField(upload_to='media/product_main_images/')
     total_quantity = models.PositiveIntegerField()
