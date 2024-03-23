@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Category',
+            name='ProductType',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('category', models.CharField(max_length=255, unique=True)),
@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='ProductAttributes',
+            name='ProductInventoryAttributes',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('specification', models.CharField(max_length=255)),
