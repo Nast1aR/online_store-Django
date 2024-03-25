@@ -17,7 +17,7 @@ class ProductAdminForm(forms.ModelForm):
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ['name', 'url']
+    list_display = ['name', 'url', 'col']
     prepopulated_fields = {'url': ('name',)}
 
 
@@ -56,14 +56,14 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['product_name', 'product_type']
     prepopulated_fields = {'url': ('product_name',)}
     list_display_links = ['product_name',]
+    form = ProductAdminForm
 
 
 @admin.register(ProductInventory)
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ['product__name', 'get_image', 'quantity', 'priceUAH']
+class ProductInventoryAdmin(admin.ModelAdmin):
+    list_display = ['product', 'get_image', 'quantity', 'priceUAH']
     readonly_fields = ['sale',]
-    list_display_links = ['product__product_name',]
-    form = ProductAdminForm
+    list_display_links = ['product',]
     inlines = [
         ImagesInline, AttributesInline,
     ]

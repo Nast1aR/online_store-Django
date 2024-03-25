@@ -10,5 +10,5 @@ urlpatterns = [
     path('materials/', MaterialAPIView.as_view(), name='materials'),
     path('product-main-on-sale/', ProductMainOnSaleAPIView.as_view(), name='product_main_on_sale'),
     path('product-main-new-arrives/', ProductMainNewArrivesAPIView.as_view(), name='product_main_new_arrives'),
-    path('product-detail/', Product)
+    path('product-detail/<slug:query>/', ProductDetailAPIView.as_view(), name='product_detail'),
 ]

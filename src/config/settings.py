@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "ckeditor",
     "ckeditor_uploader",
+    "colorfield",
 ]
 
 LOCAL_APPS = [

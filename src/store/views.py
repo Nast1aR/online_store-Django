@@ -10,21 +10,21 @@ from store.serializers import *
 
 # Filters
 class BrandAPIView(APIView):
-    def get_brands(self, *args):
+    def get(self, *args):
         model = Brand.objects.all()
         serializer_model = BrandSerializer(model, many=True)
         return Response(serializer_model.data)
 
 
 class ColorAPIView(APIView):
-    def get_colors(self, *args):
+    def get(self, *args):
         model = Color.objects.all()
         serializer_model = ColorSerializer(model, many=True)
         return Response(serializer_model.data)
 
 
 class MaterialAPIView(APIView):
-    def get_materials(self, *args):
+    def get(self, *args):
         model = Material.objects.all()
         serializer_model = MaterialSerializer(model, many=True)
         return Response(serializer_model.data)
@@ -32,37 +32,37 @@ class MaterialAPIView(APIView):
 
 # Categories
 class CategoriesListAPIView(APIView):
-    def get_categories(self, *args):
-        model = ProductType.objects.filter(cat_type='CA')
+    def get(self, *args):
+        model = ProductType.objects.filter(category='CA')
         serializer_model = CategorySerializer(model, many=True)
         return Response(serializer_model.data)
 
 
 class AccessoriesListAPIView(APIView):
-    def get_accessories(self, *args):
-        model = ProductType.objects.filter(cat_type='AC')
+    def get(self, *args):
+        model = ProductType.objects.filter(category='AC')
         serializer_model = CategorySerializer(model, many=True)
         return Response(serializer_model.data)
 
 
 # MainPage
 class ProductMainOnSaleAPIView(APIView):
-    def get_product_main_on_sale(self, *args):
-        model = ProductInventory.objects.distinct('product').order_by('-id')[:8]
+    def get(self, *args):
+        model = ProductInventory.objects.order_by('product', '-id').distinct('product')[:8]
         serializer_model = ProductInventoryListSerializer(model, many=True)
         return Response(serializer_model.data)
 
 
 class ProductMainNewArrivesAPIView(APIView):
-    def get_product_main_new_arrives(self, *args):
-        model = ProductInventory.objects.filter(new_arrive=True).distinct('product').order_by('-id')[:8]
+    def get(self, *args):
+        model = ProductInventory.objects.filter(new_arrive=True).order_by('product', '-id').distinct('product')[:8]
         serializer_model = ProductInventoryListSerializer(model, many=True)
         return Response(serializer_model.data)
 
 
 # ProductDetail
 class ProductDetailAPIView(APIView):
-    def get_product_detail(self, query):
+    def get(self, request, query):
         model = Product.objects.get(url=query)
         model_serializer = ProductSerializer(model)
         return Response(model_serializer.data)

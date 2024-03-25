@@ -1,3 +1,4 @@
+from colorfield.fields import ColorField
 from django.db import models
 
 # Create your models here.
@@ -13,9 +14,10 @@ CATEGORY = [
 class Color(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name='Кольор')
     url = models.SlugField(unique=True, verbose_name='URL')
+    col = ColorField(max_length=8)
 
     def __str__(self):
-        return self.col
+        return self.name
 
 
 class Material(models.Model):
@@ -23,7 +25,7 @@ class Material(models.Model):
     url = models.SlugField(unique=True, verbose_name='URL')
 
     def __str__(self):
-        return self.material
+        return self.name
 
 
 class Brand(models.Model):
@@ -32,7 +34,7 @@ class Brand(models.Model):
     url = models.SlugField(unique=True, verbose_name='URL')
 
     def __str__(self):
-        return self.brand
+        return self.name
 
 
 # Categories
@@ -49,14 +51,14 @@ class ProductType(models.Model):
 class Product(models.Model):
     product_name = models.CharField(max_length=255, unique=True, verbose_name='Назва Продукту')
     url = models.SlugField(unique=True, verbose_name='URL')
-    description = models.TextField(related_name='Опис')
+    description = models.TextField(verbose_name='Опис')
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE, verbose_name='Тип Продукту')
     material = models.ForeignKey(Material, on_delete=models.PROTECT, verbose_name='Матерiал')
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name='Бренд')
     colors = models.ManyToManyField(Color, verbose_name='Кольори')
 
     def __str__(self):
-        return self.product_type + self.product_name
+        return self.product_type.type + '--' + self.product_name
 
 
 class ProductInventory(models.Model):
@@ -81,7 +83,7 @@ class ProductInventory(models.Model):
         return self.priceUAH - self.sale_priceUAH
 
     def __str__(self):
-        return self.product.product_type.type + '--' + self.product
+        return self.product.product_type.type + '--' + self.product.product_name
 
 
 # Additional Product-tables

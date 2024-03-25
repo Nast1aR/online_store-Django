@@ -13,7 +13,7 @@ class BrandSerializer(serializers.ModelSerializer):
 class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Color
-        fields = ['name', 'url']
+        fields = ['name', 'url', 'col']
 
 
 class MaterialSerializer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class MaterialSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductType
-        fields = ['product_type', 'url']
+        fields = ['type', 'url']
 
 
 # ProductList
@@ -56,18 +56,18 @@ class ProductInventoryDetailSerializer(serializers.ModelSerializer):
     attributes = ProductInventoryAttributesSerializer(many=True)
 
     class Meta:
-        model = Product
+        model = ProductInventory
         fields = [
-            'main_image', 'images',
-            'sku',  'color',
+            'sku',
+            'color',
             'priceUAH', 'sale_priceUAH', 'sale',
-            'new_arrive', 'attributes'
+            'new_arrive', 'images', 'attributes'
             ]
 
 
 class ProductSerializer(serializers.ModelSerializer):
     inventory = ProductInventoryDetailSerializer(many=True)
-    colors = serializers.SlugField(slug_field='color', many=True, read_only=True)
+    colors = ColorSerializer(many=True)
 
     class Meta:
         model = Product
