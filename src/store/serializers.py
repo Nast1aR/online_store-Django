@@ -68,6 +68,7 @@ class ProductInventoryDetailSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     inventory = ProductInventoryDetailSerializer(many=True)
     colors = ColorSerializer(many=True)
+    product_type = serializers.CharField(source='product_type.type')
 
     class Meta:
         model = Product
