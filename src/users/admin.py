@@ -13,4 +13,3 @@ class UserAdmin(admin.ModelAdmin):
         "is_staff",
         "email",
     ]
-
