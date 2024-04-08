@@ -1,27 +1,24 @@
 from rest_framework import serializers
-# from django.contrib.auth.models import User
-from .models import User, FavoriteProducts
-from django.contrib.auth.hashers import make_password
-# from store.serializers import ProductListSerializer
+from .models import FavoriteProductInventory, User 
 
-
-class FavoriteProductsSerializer(serializers.ModelSerializer):
+class FavoriteProductInventorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = FavoriteProducts
+        model = FavoriteProductInventory
         fields = ('id', 'user', 'product', 'added_at')
+
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    profile = serializers.PrimaryKeyRelatedField(read_only=True)
-    favorite_products = FavoriteProductsSerializer(many=True, read_only=True)
+    favorite_products = FavoriteProductInventorySerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name', 'favorite')
+        fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name', 'favorite_products')
+        extra_kwargs = {'password': {'write_only': True}} 
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
-        hashed_password = make_password(password)
-        user = User.objects.create(**validated_data, password=hashed_password)
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
         return user
-    

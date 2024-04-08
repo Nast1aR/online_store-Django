@@ -1,7 +1,7 @@
 class Role:
     ADMIN = 'admin'
     USER = 'user'
-    GUEST = "Guest"
+    GUEST = "guest"
 
 
     @classmethod

@@ -17,53 +17,53 @@ class ProductAdminForm(forms.ModelForm):
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ['color', 'color_id']
+    list_display = ['name', 'url', 'col']
+    prepopulated_fields = {'url': ('name',)}
 
 
 @admin.register(Material)
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ['material', 'material_id']
+    list_display = ['name', 'url']
+    prepopulated_fields = {'url': ('name',)}
 
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ['brand', 'brand_id', 'get_image']
+    list_display = ['name', 'url',"logo", 'get_image']
+    prepopulated_fields = {'url': ('name',)}
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.logo.url} height=100>')
 
 
-@admin.register(MainCategory)
-class MainCategoryAdmin(admin.ModelAdmin):
-    list_display = ['main_category_id', 'main_category',]
-    list_display_links = ['main_category',]
-
-
-@admin.register(Category)
+@admin.register(ProductType)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['category_id', 'category',]
-    list_display_links = ['category',]
-
-
-@admin.register(SubCategory)
-class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ['cat', 'sub_category', 'subcategory_id',]
-    list_display_links = ['sub_category',]
+    list_display = ['url', 'type',]
+    prepopulated_fields = {'url': ('type',)}
+    list_display_links = ['type',]
 
 
 class ImagesInline(admin.TabularInline):
-    model = ProductImages
+    model = ProductInventoryImages
 
 
 class AttributesInline(admin.TabularInline):
-    model = ProductAttributes
+    model = ProductInventoryAttributes
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['product_name', 'get_image', 'quantity', 'total_quantity', 'product_type', 'priceUAH']
+    list_display = ['product_name', 'product_type']
+    prepopulated_fields = {'url': ('product_name',)}
     list_display_links = ['product_name',]
     form = ProductAdminForm
+
+
+@admin.register(ProductInventory)
+class ProductInventoryAdmin(admin.ModelAdmin):
+    list_display = ['product', 'get_image', 'quantity', 'priceUAH']
+    readonly_fields = ['sale',]
+    list_display_links = ['product',]
     inlines = [
         ImagesInline, AttributesInline,
     ]

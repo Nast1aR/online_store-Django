@@ -1,83 +1,104 @@
+from colorfield.fields import ColorField
 from django.db import models
 
 # Create your models here.
 
 
+CATEGORY = [
+    ('CA', 'Categories'),
+    ('AC', 'Accessories'),
+]
+
+
+# Filters
 class Color(models.Model):
-    color = models.CharField(max_length=255, unique=True, verbose_name='Кольор')
-    color_id = models.SlugField(unique=True, verbose_name='ID Кольору')
+    name = models.CharField(max_length=255, unique=True, verbose_name='Кольор')
+    url = models.SlugField(unique=True, verbose_name='URL')
+    col = ColorField(max_length=8)
 
     def __str__(self):
-        return self.color
+        return self.name
 
 
 class Material(models.Model):
-    material = models.CharField(max_length=255, unique=True, verbose_name='Матеріал')
-    material_id = models.SlugField(unique=True, verbose_name='ID Матеріалу')
+    name = models.CharField(max_length=255, unique=True, verbose_name='Матеріал')
+    url = models.SlugField(unique=True, verbose_name='URL')
 
     def __str__(self):
-        return self.material
+        return self.name
 
 
 class Brand(models.Model):
-    brand = models.CharField(max_length=255, unique=True, verbose_name='Бренд')
+    name = models.CharField(max_length=255, unique=True, verbose_name='Бренд')
     logo = models.ImageField(upload_to='media/brand-logo/', blank=True, verbose_name='Логотип')
-    brand_id = models.SlugField(unique=True, verbose_name='ID Бренду')
+    url = models.SlugField(unique=True, verbose_name='URL')
 
     def __str__(self):
-        return self.brand
+        return self.name
 
 
-class MainCategory(models.Model):
-    main_category = models.CharField(max_length=255, unique=True, verbose_name='Основна Категорія')
-    main_category_id = models.SlugField(unique=True, verbose_name='')
-
-    def __str__(self):
-        return self.main_category
-
-
-class Category(models.Model):
-    main_cat = models.ForeignKey(MainCategory, on_delete=models.CASCADE, verbose_name='Основна Категорія')
-    category = models.CharField(max_length=255, unique=True, verbose_name='Категорія')
-    category_id = models.SlugField(unique=True)
+# Categories
+class ProductType(models.Model):
+    category = models.CharField(max_length=2, choices=CATEGORY, verbose_name='Категорія')
+    type = models.CharField(max_length=255, unique=True, verbose_name='Тип')
+    url = models.SlugField(unique=True, verbose_name='URL')
 
     def __str__(self):
-        return self.main_cat.main_category + '--' + self.category
+        return self.type
 
 
-class SubCategory(models.Model):
-    cat = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категорія')
-    sub_category = models.CharField(max_length=255, unique=True, verbose_name='ПідКатегорія')
-    subcategory_id = models.SlugField(unique=True)
-
-    def __str__(self):
-        return self.cat.main_cat.main_category + '--' + self.cat.category + '--' + self.sub_category
-
-
+# All Product-tables
 class Product(models.Model):
-    product_name = models.CharField(max_length=255, unique=True)
-    product_id = models.SlugField(unique=True)
-    description = models.TextField()
-    main_image = models.ImageField(upload_to='media/product_main_images/')
-    total_quantity = models.PositiveIntegerField()
-    quantity = models.PositiveIntegerField()
-    priceUAH = models.PositiveSmallIntegerField()
-    product_type = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
-    color = models.ForeignKey(Color, on_delete=models.PROTECT)
-    material = models.ForeignKey(Material, on_delete=models.PROTECT)
-    brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
-    new_arrive = models.BooleanField(default=True)
+    product_name = models.CharField(max_length=255, unique=True, verbose_name='Назва Продукту')
+    url = models.SlugField(unique=True, verbose_name='URL')
+    description = models.TextField(verbose_name='Опис')
+    product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE, verbose_name='Тип Продукту')
+    material = models.ForeignKey(Material, on_delete=models.PROTECT, verbose_name='Матерiал')
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name='Бренд')
+    colors = models.ManyToManyField(Color, verbose_name='Кольори')
 
     def __str__(self):
-        return self.product_name
+        return self.product_type.type + '--' + self.product_name
 
 
-class ProductImages(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    images = models.ImageField(upload_to='media/product_images/')
+class ProductInventory(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='inventory', verbose_name='Продукт')
+    sku = models.CharField(max_length=255, unique=True, verbose_name='Код Продукту')
+    main_image = models.ImageField(upload_to='media/product_main_images/', verbose_name='Головне Фото')
+    color = models.ForeignKey(Color, on_delete=models.PROTECT, verbose_name='Кольор')
+    quantity = models.PositiveIntegerField(verbose_name='Кiлькiсть')
+    priceUAH = models.PositiveSmallIntegerField(verbose_name='Цiна')
+    sale_priceUAH = models.PositiveSmallIntegerField(null=True, blank=True, default=0, verbose_name='Ціна зі знижкою')
+    new_arrive = models.BooleanField(default=True, verbose_name='Нещодавно доданий')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def sale(self):
+        if self.sale_priceUAH == 0:
+            return 0
+        elif self.sale_priceUAH is None:
+            return 0
+        elif self.sale_priceUAH >= self.priceUAH:
+            return ''
+        return self.priceUAH - self.sale_priceUAH
+
+    def __str__(self):
+        return self.product.product_type.type + '--' + self.product.product_name
 
 
-class ProductAttributes(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    specification = models.CharField(max_length=255)
-    detail = models.CharField(max_length=255)
+# Additional Product-tables
+class ProductInventoryImages(models.Model):
+    product_inventory = models.ForeignKey(
+        ProductInventory, on_delete=models.CASCADE,
+        related_name='images', verbose_name='Варіант Продукту'
+    )
+    images = models.ImageField(upload_to='media/product_inventory_images/', verbose_name='Фото')
+
+
+class ProductInventoryAttributes(models.Model):
+    product = models.ForeignKey(
+        ProductInventory, on_delete=models.CASCADE,
+        related_name='attributes', verbose_name='Варіант Продукту'
+    )
+    attribute_type = models.CharField(max_length=255, verbose_name='Тип атрибуту')
+    value = models.CharField(max_length=255, verbose_name='Значення Атрибуту')

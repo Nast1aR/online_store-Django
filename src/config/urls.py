@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from users.api import UserCreateAPI, UserRetrieveAPI
+from authentication.views import RegisterView
+
 
 app_name = "user"
 
@@ -11,7 +13,7 @@ urlpatterns = [
     path("create/", UserCreateAPI.as_view(), name="user-create"),
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path("users/", include("users.urls")),
-    path("authentication", include("authentication.urls")),
+    path("authentication/", include("authentication.urls")),
     path("", include("store.urls")),
 ]
 

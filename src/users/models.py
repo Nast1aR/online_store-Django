@@ -1,18 +1,18 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-from django.contrib.auth.hashers import make_password
 from .managers import UserManager
 from django.conf import settings
-from store.models import Product
 from .constants import Role
+from store.models import ProductInventory
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=40, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    # favorite_products = models.ManyToManyField(Product,                              
-    #           related_name='favorited_by', blank=True)
+    # password = models.CharField(max_length=100)
+    favorite_products = models.ManyToManyField(ProductInventory,                              
+               related_name='favorited_by', blank=True)
     image = models.ImageField(upload_to="uploads/images/users",blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
@@ -41,17 +41,17 @@ class User(AbstractBaseUser, PermissionsMixin):
             return self.email
         
     
-class UserImage(models.Model):
-    user = models.ForeignKey(User, related_name='images', on_delete=models.CASCADE)
-    filename = models.CharField(('filename'), max_length=255)
+# class UserImage(models.Model):
+#     user = models.ForeignKey(User, related_name='images', on_delete=models.CASCADE)
+#     filename = models.CharField(('filename'), max_length=255)
 
-    def __str__(self):
-        return self.filename
+#     def __str__(self):
+#         return self.filename
     
-        
-class FavoriteProducts(models.Model):
+#изменила ипорт на модель ProductType   
+class FavoriteProductInventory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_favorite_products')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='favorited_products')
+    product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE, related_name='favorited_products')
     added_at = models.DateTimeField(auto_now_add=True, verbose_name="Date added")
     
 

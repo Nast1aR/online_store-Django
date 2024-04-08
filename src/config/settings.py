@@ -19,8 +19,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
 
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ORIGIN_WHITELIST = [
+CORS_ALLOWED_ORIGINS = [
     'https://localhost:8000',
+    'https://localhost:5173',
+    'https://localhost:3000',
 ]
 
 # Application definition
@@ -35,10 +37,11 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "rest_framework",
+
     "corsheaders",
     "ckeditor",
     "ckeditor_uploader",
+    "colorfield",
     "drf_yasg"
 ]
 
@@ -89,10 +92,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'qmdvnugt',
-        'USER': 'qmdvnugt',
-        'PASSWORD': 'dD1CLmzIxPEw2wFrYBg53NT8tKoiYDZN',
-        'HOST': 'kesavan.db.elephantsql.com',
+        'NAME': 'database',
+        'USER': 'postgres',
+        'PASSWORD': 'mypassword',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -130,7 +133,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-#AUTH_USER_MODEL = "authentication.User"
+AUTH_USER_MODEL = "users.User"
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
@@ -146,7 +149,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
@@ -162,6 +164,13 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ),  
 }
+
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': '',
+    'JWT_ALGORITHM': 'HS256',
+}
+
 
 
 SIMPLE_JWT = {
