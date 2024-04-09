@@ -90,7 +90,7 @@ class ProductInventory(models.Model):
 class ProductInventoryImages(models.Model):
     product_inventory = models.ForeignKey(
         ProductInventory, on_delete=models.CASCADE,
-        related_name='images', verbose_name='Варіант Прдукту'
+        related_name='images', verbose_name='Варіант Продукту'
     )
     images = models.ImageField(upload_to='media/product_inventory_images/', verbose_name='Фото')
 
@@ -98,7 +98,7 @@ class ProductInventoryImages(models.Model):
 class ProductInventoryAttributes(models.Model):
     product = models.ForeignKey(
         ProductInventory, on_delete=models.CASCADE,
-        related_name='attributes', verbose_name='Варіант Прдукту'
+        related_name='attributes', verbose_name='Варіант Продукту'
     )
     attribute_type = models.CharField(max_length=255, verbose_name='Тип атрибуту')
     value = models.CharField(max_length=255, verbose_name='Значення Атрибуту')
