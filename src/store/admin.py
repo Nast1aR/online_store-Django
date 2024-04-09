@@ -29,7 +29,7 @@ class MaterialAdmin(admin.ModelAdmin):
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ['name', 'url', 'get_image']
+    list_display = ['name', 'url',"logo", 'get_image']
     prepopulated_fields = {'url': ('name',)}
 
     def get_image(self, obj):
