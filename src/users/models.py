@@ -4,21 +4,24 @@ from .managers import UserManager
 from django.conf import settings
 from .constants import Role
 from store.models import ProductInventory
+from django.utils.safestring import mark_safe
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.CharField(max_length=40, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    # password = models.CharField(max_length=100)
+    email = models.CharField(max_length=40, unique=True)
+    password = models.CharField(max_length=100)
     favorite_products = models.ManyToManyField(ProductInventory,                              
                related_name='favorited_by', blank=True)
     image = models.ImageField(upload_to="uploads/images/users",blank=True, null=True)
-    phone = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     role = models.CharField(max_length=20,choices=Role.choices(), default=Role.USER)
  
     objects = UserManager()
@@ -41,6 +44,10 @@ class User(AbstractBaseUser, PermissionsMixin):
             return self.email
         
     
+    def image_tag(self):
+        return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+    image_tag.short_description = 'Image'
+    
 # class UserImage(models.Model):
 #     user = models.ForeignKey(User, related_name='images', on_delete=models.CASCADE)
 #     filename = models.CharField(('filename'), max_length=255)
@@ -52,7 +59,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class FavoriteProductInventory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_favorite_products')
     product = models.ForeignKey(ProductInventory, on_delete=models.CASCADE, related_name='favorited_products')
-    added_at = models.DateTimeField(auto_now_add=True, verbose_name="Date added")
+    # added_at = models.DateTimeField(auto_now_add=True, verbose_name="Date added")
     
 
     class Meta:

@@ -3,13 +3,15 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .views import RegisterView
-
-app_name = "authentication"
+from .views import RegisterView, ProfileUpdateView, ProfileDetailView, LoginView, LogoutView
 
 urlpatterns = [
-    path('authentication/register/', RegisterView.as_view(), name='register'),
-    path('authentication/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('authentication/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('user/edit/', ProfileUpdateView.as_view(), name='profile_edit'),
+    path('user/<str:slug>/', ProfileDetailView.as_view(), name='profile_detail'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 

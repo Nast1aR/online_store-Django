@@ -4,7 +4,7 @@ from .views import  AddFavoriteProductTypesView, RemoveFavoriteProductTypesView,
 from .api import UserUpdateAPI
 
 urlpatterns = [
-    path("create/", UserCreateAPI.as_view(), name="user-create"),
+    # path("create/", UserCreateAPI.as_view(), name="user-create"),
     path("retrieve/<int:id>/", UserRetrieveAPI.as_view(), name="user-retrieve"),
     path('update/<int:id>/', UserUpdateAPI.as_view(), name='user-update'), 
     path('favorites/add/', AddFavoriteProductTypesView.as_view(), name='add_favorite_product'),
