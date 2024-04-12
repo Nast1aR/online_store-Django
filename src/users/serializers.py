@@ -4,7 +4,7 @@ from .models import FavoriteProductInventory, User
 class FavoriteProductInventorySerializer(serializers.ModelSerializer):
     class Meta:
         model = FavoriteProductInventory
-        fields = ('id', 'user', 'product', 'added_at')
+        fields = ('id', 'user', 'product',)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,8 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'email', 'first_name', 'last_name', 'favorite_products')
-        extra_kwargs = {'password': {'write_only': True}} 
+        fields = ('id', 'username', 'password','password2', 'email', 'first_name', 'last_name', 'favorite_products')
+        # extra_kwargs = {'password': {'write_only': True}} 
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
