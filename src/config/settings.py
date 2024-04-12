@@ -89,12 +89,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'DeepSound',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "qmdvnugt",
+        'USER': 'qmdvnugt',
+        'PASSWORD': 'dD1CLmzIxPEw2wFrYBg53NT8tKoiYDZN',
+        'HOST': 'kesavan.db.elephantsql.com',
         'PORT': '5432',
     }
 }
